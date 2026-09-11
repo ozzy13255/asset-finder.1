@@ -9,8 +9,8 @@
 - [ ] Configure app URL + anon key
 - [ ] Enable online mode
 - [ ] Complete cloud CRUD migration for every existing Asset Finder action
-- [ ] Add Owner Admin panel
-- [ ] Add Patch Admin panel
+- [x] Add Owner/Patch Admin panel
+- [x] Add Patch Admin user creation screen
 - [ ] Add account suspension/reset controls
 - [ ] Add audit log
 - [ ] Add cloud photo storage with patch-scoped policies

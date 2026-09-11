@@ -51,7 +51,17 @@ alter table public.patch_inventories enable row level security;
 
 -- Profiles: users can read their own immutable identity/role fields; owner can administer all.
 drop policy if exists profiles_select_self_or_owner on public.profiles;
-create policy profiles_select_self_or_owner on public.profiles for select using (id=auth.uid() or public.current_role()='owner');
+drop policy if exists profiles_select_self_owner_or_patch_admin on public.profiles;
+create policy profiles_select_self_owner_or_patch_admin on public.profiles
+for select using (
+  id=auth.uid()
+  or public.current_role()='owner'
+  or (public.current_role()='patch_admin' and exists (
+    select 1 from public.user_patches mine
+    join public.user_patches target on target.patch_id=mine.patch_id
+    where mine.user_id=auth.uid() and target.user_id=profiles.id
+  ))
+);
 
 drop policy if exists profiles_update_owner on public.profiles;
 create policy profiles_update_owner on public.profiles for update using (public.current_role()='owner') with check (public.current_role()='owner');
@@ -65,7 +75,15 @@ create policy patches_owner_write on public.patches for all using (public.curren
 
 -- Assignments: users see their own; owner sees all. Writes are performed by the protected admin function.
 drop policy if exists user_patches_select on public.user_patches;
-create policy user_patches_select on public.user_patches for select using (user_id=auth.uid() or public.current_role()='owner');
+create policy user_patches_select on public.user_patches
+for select using (
+  user_id=auth.uid()
+  or public.current_role()='owner'
+  or (public.current_role()='patch_admin' and exists (
+    select 1 from public.user_patches mine
+    where mine.user_id=auth.uid() and mine.patch_id=user_patches.patch_id
+  ))
+);
 drop policy if exists user_patches_owner_write on public.user_patches;
 create policy user_patches_owner_write on public.user_patches for all using (public.current_role()='owner') with check (public.current_role()='owner');
 
