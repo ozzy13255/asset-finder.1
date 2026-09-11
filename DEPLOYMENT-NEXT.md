@@ -1,0 +1,21 @@
+# Deployment checklist
+
+- [ ] Create Supabase project
+- [ ] Run schema.sql
+- [ ] Deploy bootstrap-owner
+- [ ] Set BOOTSTRAP_SECRET
+- [ ] Create Owner account
+- [ ] Deploy admin-create-user
+- [ ] Configure app URL + anon key
+- [ ] Enable online mode
+- [ ] Complete cloud CRUD migration for every existing Asset Finder action
+- [ ] Add Owner Admin panel
+- [ ] Add Patch Admin panel
+- [ ] Add account suspension/reset controls
+- [ ] Add audit log
+- [ ] Add cloud photo storage with patch-scoped policies
+- [ ] Test patch isolation with two separate test accounts
+- [ ] Test owner cross-patch access
+- [ ] Test suspended account rejection
+- [ ] Test forced first-login password change
+- [ ] Production HTTPS/domain
