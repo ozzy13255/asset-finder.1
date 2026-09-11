@@ -36,3 +36,7 @@ Inventory is stored one row per patch. Row Level Security policies call `can_acc
 ## Next production step
 
 The next implementation pass should move all existing inventory CRUD operations from the browser's local `db` object to authenticated cloud operations and add the Owner/Patch Admin user-management screens. The current bridge is deliberately conservative so the original v2.7.5 UI remains intact while the authentication foundation is established.
+
+
+## Online configuration
+The browser client uses the Supabase publishable key. Do not place the Supabase service-role key in this repository or any browser code.
